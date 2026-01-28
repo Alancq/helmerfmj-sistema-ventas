@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\ReporteController;
 use App\Http\Controllers\Api\RolController;
 use App\Http\Controllers\Api\UsuarioController;
 use App\Http\Controllers\Api\VentaController;
+use App\Http\Controllers\HealthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,17 +20,9 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-// --- TAREA CD: HEALTH CHECK 
-Route::get('/health', function () {
-    return response()->json([
-        'status' => 'ok',
-        'server_time' => now(),
-        'env' => app()->environment(),
-        'release' => config('app.release_version', 'unknown'), // Leera lo que pongamos en AppServiceProvider
-    ], 200);
-});
-
-
+// --- TAREA CD: HEALTH CHECK
+// Route::get('/health', HealthController::class);
+Route::get('/health', [HealthController::class, '__invoke']);
 Route::prefix('v1')->group(function () {
 
     // Auth Público
